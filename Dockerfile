@@ -1,17 +1,14 @@
-# Use an official Node.js runtime as a parent image
-FROM node:16-alpine
+# Use a small, secure base image
+FROM nginx:alpine
 
-# Set the working directory in the container
-WORKDIR /app
+# Remove default nginx website
+RUN rm -rf /usr/share/nginx/html/*
 
-# Copy the current directory contents into the container
-COPY . /app
+# Copy your HTML files to nginx public directory
+COPY . /usr/share/nginx/html
 
-# Install any needed dependencies
-RUN npm install
+# Expose the port
+EXPOSE 80
 
-# Expose the port the app runs on
-EXPOSE 3000
-
-# Define the command to run your app
-CMD ["npm", "start"]
+# Start nginx
+CMD ["nginx", "-g", "daemon off;"]
