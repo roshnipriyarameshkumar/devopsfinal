@@ -1,14 +1,11 @@
-# Use a small, secure base image
+# Use official nginx base image
 FROM nginx:alpine
 
-# Remove default nginx website
+# Remove default nginx content
 RUN rm -rf /usr/share/nginx/html/*
 
-# Copy your HTML files to nginx public directory
-COPY . /usr/share/nginx/html
+# Copy your build folder content to nginx html directory
+COPY build/ /usr/share/nginx/html
 
-# Expose the port
+# Expose default HTTP port
 EXPOSE 80
-
-# Start nginx
-CMD ["nginx", "-g", "daemon off;"]
