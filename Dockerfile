@@ -1,11 +1,13 @@
-# Use official nginx base image
+# Use official NGINX image
 FROM nginx:alpine
 
-# Remove default nginx content
+# Remove default nginx index
 RUN rm -rf /usr/share/nginx/html/*
 
-# Copy your build folder content to nginx html directory
-COPY build/ /usr/share/nginx/html
+# Copy your static files from /build to nginx root
+COPY build/ /usr/share/nginx/html/
 
-# Expose default HTTP port
+# Set proper permissions (optional, safe)
+RUN chmod -R 755 /usr/share/nginx/html
+
 EXPOSE 80
