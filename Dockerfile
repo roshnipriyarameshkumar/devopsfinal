@@ -5,7 +5,7 @@ FROM nginx:alpine
 RUN rm -rf /usr/share/nginx/html/*
 
 # Copy ONLY the contents of your local build folder into the container
-COPY ./build/ /usr/share/nginx/html/
+COPY /build/ /usr/share/nginx/html/
 
 # Set proper permissions (optional but recommended)
 RUN chmod -R 755 /usr/share/nginx/html
