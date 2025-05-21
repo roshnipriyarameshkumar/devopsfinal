@@ -1,14 +1,16 @@
-# Use official NGINX image
-FROM nginx:alpine
+FROM nginx:1.27.0-alpine
 
-# Remove default nginx index
-RUN rm -rf /usr/share/nginx/html/*
+# Copy website files
+COPY build/ /usr/share/nginx/html
 
-# Copy ONLY the contents of your local build folder into the container
-COPY /build/ /usr/share/nginx/html/
+# Copy nginx config with auth enabled
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Set proper permissions (optional but recommended)
-RUN chmod -R 755 /usr/share/nginx/html
+# Copy htpasswd file
+COPY htpasswd /etc/nginx/.htpasswd
 
+# Fix permissions (optional)
 # Expose port 80
 EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
